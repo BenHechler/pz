@@ -1,0 +1,98 @@
+[project]
+name = "palimpzest"
+version = "0.1.0"
+description = "Palimpzest is the next generation of extraction and document data management"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["extraction", "llm", "tools", "document", "search", "integration"]
+authors = [
+    {name="MIT DSG Semantic Management Lab", email="michjc@csail.mit.edu"},
+]
+dependencies = [
+    "charset-normalizer>=3.3.2",
+    "click>=8.1.7",
+    "click-aliases>=1.0.4",
+    "dspy-ai>=2.4.1",
+    "fastapi~=0.100.0",
+    "fuzzywuzzy>=0.18.0",
+    "google-generativeai==0.4.1",
+    "gradio>=4.20.1",
+    "grobid-client-python==0.0.5",
+    "layoutparser>=0.3.4",
+    "lxml-html-clean>=0.1.1",
+    "modal>=0.57.39",
+    "ncls==0.0.68",
+    "necessary>=0.3.2",
+    "numpy>=1.23.2",
+    "openai>=1.0",
+    "openpyxl==3.1.2",
+    "pandas~=2.1.1",
+    "papermage>=0.16.0",
+    "pdf2image",
+    "python-Levenshtein",
+    "pdfplumber==0.7.4",
+    "pillow>=10.2.0",
+    "prettytable>=3.9.0",
+    "pyarrow>=13.0.0",
+    "python-Levenshtein>=0.25.1",
+    "pyyaml>=6.0.1",
+    "requests>=2.25",
+    "requests-html>=0.10.0",
+    "scipy>=1.9.0",
+    "tabulate>=0.9.0",
+    "tenacity>=8.2.3",
+    "torch>=1.9.0",
+    "tqdm>=4.66.2",
+    "transformers>=4.11.3",
+    "requests-html",
+    "networkx",
+    "streamlit",
+    "matplotlib",
+    # Add other dependencies as needed
+]
+
+
+
+
+
+classifiers=[
+    "Development Status :: 4 - Beta",  # Change as appropriate
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",  # Change as appropriate
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",  # Specify versions you support
+    # Add more classifiers as appropriate
+]
+
+[project.scripts]
+pz = "cli.cli_main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.rst", "*.md"]
+
+
+
+
+
+
+
+
+
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+homepage = "https://github.com/mikecafarella/Palimpzest"
+repository = "https://github.com/mikecafarella/Palimpzest"
+# documentation = "https://readthedocs.org"
+# changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"

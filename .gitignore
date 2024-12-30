@@ -1,0 +1,28 @@
+.env
+build/*
+.vscode/*
+
+# python artifacts
+*.egg-info
+**/__pycache__/
+
+# other
+.DS_Store
+
+# logs
+*.log
+
+# virtual environment(s)
+venv/
+
+# tmp
+testdata/maildir/
+
+# jupyter
+.ipynb_checkpoints/
+
+# evaluation
+old-eval-results/
+eval-results/
+
+testdata/enron-eval/*.txt

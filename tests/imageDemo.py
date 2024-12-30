@@ -92,6 +92,10 @@ if __name__ == "__main__":
 
     verbose = True
     datasetid = "images-tiny"
+
+    if not datasetid in pz.DataDirectory().listRegisteredDatasets():
+        pz.DataDirectory().registerLocalDirectory(
+            path=f"testdata/{datasetid}", dataset_id=datasetid)
     policy = pz.UserChoice()
 
     if os.getenv('OPENAI_API_KEY') is None and os.getenv('TOGETHER_API_KEY') is None:

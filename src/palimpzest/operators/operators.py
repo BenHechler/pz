@@ -48,6 +48,9 @@ class LogicalOperator:
         self.inputSchema = inputSchema
         self.inputOp = inputOp
 
+    def __repr__(self) -> str:
+        return f"{self.inputSchema}, {self.outputSchema}, {self.inputOp}\n"
+
     def dumpLogicalTree(self) -> Tuple[LogicalOperator, LogicalOperator]:
         raise NotImplementedError("Abstract method")
 
@@ -333,11 +336,12 @@ class LogicalOperator:
             return sentinel_plans
 
         # create set of logical plans (e.g. consider different filter/join orderings)
-        logicalPlans = LogicalOperator._createLogicalPlans(self)
+        logicalPlans = LogicalOperator._createLogicalPlans(self)  # todo: article step 2
         print(f"LOGICAL PLANS: {len(logicalPlans)}")
+        print("logicalPlans: ", logicalPlans)
 
         # iterate through logical plans and evaluate multiple physical plans
-        physicalPlans = [
+        physicalPlans = [  # todo: article step 3
             physicalPlan
             for logicalPlan in logicalPlans
             for physicalPlan in logicalPlan._createPhysicalPlans(
@@ -348,6 +352,7 @@ class LogicalOperator:
             )
         ]
         print(f"INITIAL PLANS: {len(physicalPlans)}")
+        print(f"INITIAL: {physicalPlans}")
 
         # compute estimates for every operator
         op_filters_to_estimates = {}
@@ -479,7 +484,7 @@ class LogicalOperator:
                 dedup_plans.append(plan)
         
         print(f"DEDUP PLANS: {len(dedup_plans)}")
-
+        print("dedup_plans", dedup_plans)
         # return de-duplicated set of plans if we don't want to compute the pareto frontier
         if not pareto_optimal:
             if max is not None:
@@ -522,7 +527,10 @@ class LogicalOperator:
                 paretoFrontierPlans.append((totalTime_i, totalCost_i, quality_i, plan, fullPlanCostEst))
 
         print(f"PARETO PLANS: {len(paretoFrontierPlans)}")
+        print(f"PARETO : {paretoFrontierPlans}")
+        
         print(f"BASELINE PLANS: {len(baselinePlans)}")
+        print(f"BASELINE : {baselinePlans}")
 
         # if specified, grab up to `min` total plans, and choose the remaining plans
         # based on their smallest agg. distance to the pareto frontier; distance is computed

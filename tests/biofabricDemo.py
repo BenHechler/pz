@@ -92,6 +92,7 @@ def matching(input_dataset, policy):
     return output_df, matched_tables
 
 if __name__ == "__main__":
+    print("biofabric")
     startTime = time.time()
     parser = argparse.ArgumentParser(description='Run a simple demo')
     parser.add_argument('--no-cache', action='store_true', help='Do not use cached results')

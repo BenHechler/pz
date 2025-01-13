@@ -63,17 +63,22 @@ if __name__ == "__main__":
     startTime = time.time()
 
     # user implemented plan
-    emails = pz.Dataset(source="enron-tiny", schema=Email)
-    emails = emails.filterByStr("The email is about someone taking a vacation")
+    datasetid = "enron-tiny"
+    if not datasetid in pz.DataDirectory().listRegisteredDatasets():
+        pz.DataDirectory().registerLocalDirectory(path=f"testdata/{datasetid}", dataset_id=datasetid)
+
+    emails = pz.Dataset(datasetid, schema=Email)
     emails = emails.filterByStr("The email is sent by Larry")
+    emails = emails.filterByStr("The email is about someone taking a vacation")
 
     # get logical tree
     t1 = time.time()
-    logicalTree = emails.getLogicalTree()
+    logicalTree = emails.getLogicalTree()  # todo: article step 1
+    print("logicalTree: ", logicalTree)
     t2 = time.time()
 
     # get candidate physical plans
-    candidatePlans = logicalTree.createPhysicalPlanCandidates(shouldProfile=True)
+    candidatePlans = logicalTree.createPhysicalPlanCandidates(shouldProfile=True) # todo: article step 2,3,4
     t3 = time.time()
     print(f"Create Plan: {t1 - startTime:.3f}")
     print(f"Get Logical Tree: {t2 - t1:.3f}")
@@ -94,7 +99,8 @@ if __name__ == "__main__":
 
     # have policy select the candidate plan to execute
     myPolicy = MinCost()
-    planTime, planCost, quality, physicalTree, _ = myPolicy.choose(candidatePlans)
+    planTime, planCost, quality, physicalTree, _ = myPolicy.choose(candidatePlans) # todo: article step 5, 6
+    print(f"candidatePlans: {candidatePlans}")
     print("----------")
     print(f"Policy is: {str(myPolicy)}")
     print(f"Chose plan: Time est: {planTime:.3f} -- Cost est: {planCost:.3f} -- Quality est: {quality:.3f}")

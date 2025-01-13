@@ -77,6 +77,7 @@ def emitDataset(rootSet, policy, title="Dataset", verbose=False):
 #
 if __name__ == "__main__":
     # parse arguments
+    print("start main")
     startTime = time.time()
     parser = argparse.ArgumentParser(description='Run a simple demo')
     parser.add_argument('--no-cache', action='store_true', help='Do not use cached results')
@@ -103,7 +104,9 @@ if __name__ == "__main__":
 
     print("Starting image task")
     rootSet = buildImagePlan(datasetid)
+    print("rootSet: ", rootSet)
     physicalTree = emitDataset(rootSet, policy, title="Dogs", verbose=verbose)
+    print("physicalTree: ", physicalTree)
     records = [r for r in physicalTree]
 
     print("Obtained records", records)

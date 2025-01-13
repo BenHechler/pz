@@ -1,0 +1,115 @@
+start main
+start image demo
+Starting image task
+rootSet:  Dataset(schema=DogImage(breed, contents, filename, text_description), desc=Images of dogs, filter=None, aggFunc=None, limit=None, uid=226a16c1815e5f43ffad890680a12cd2cfbc641da49892b216ebd14d0ed8a00b)
+LOGICAL PLANS: 2
+INITIAL PLANS: 8
+DEDUP PLANS: 4
+PARETO PLANS: 2
+BASELINE PLANS: 0
+----------
+Plan 0: Time est: 146.447 -- Cost est: 0.806 -- Quality est: 0.509
+Physical operator tree
+ InduceFromCandidateOp(DogImage(breed, contents, filename, text_description), Model: gpt-3.5-turbo-0125, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+   FilterCandidateOp(ImageFile(contents, filename, text_description), Filter: Filter(The image contains one or more dogs), Model: gpt-3.5-turbo-0125, Prompt Strategy: dspy-chain-of-thought-bool)
+     InduceFromCandidateOp(ImageFile(contents, filename, text_description), Model: gpt-4-turbo, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+       MarshalAndScanDataOp(File(contents, filename), images-tiny)
+----------
+Plan 1: Time est: 218.872 -- Cost est: 1.702 -- Quality est: 0.694
+Physical operator tree
+ InduceFromCandidateOp(DogImage(breed, contents, filename, text_description), Model: gpt-4-0125-preview, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+   FilterCandidateOp(ImageFile(contents, filename, text_description), Filter: Filter(The image contains one or more dogs), Model: gpt-4-0125-preview, Prompt Strategy: dspy-chain-of-thought-bool)
+     InduceFromCandidateOp(ImageFile(contents, filename, text_description), Model: gpt-4-turbo, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+       MarshalAndScanDataOp(File(contents, filename), images-tiny)
+Please select a plan in [0-1]: 0
+----------
+Policy is: User Choice
+Chose plan: Time est: 146.447 -- Cost est: 0.806 -- Quality est: 0.509
+ InduceFromCandidateOp(DogImage(breed, contents, filename, text_description), Model: gpt-3.5-turbo-0125, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+   FilterCandidateOp(ImageFile(contents, filename, text_description), Filter: Filter(The image contains one or more dogs), Model: gpt-3.5-turbo-0125, Prompt Strategy: dspy-chain-of-thought-bool)
+     InduceFromCandidateOp(ImageFile(contents, filename, text_description), Model: gpt-4-turbo, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+       MarshalAndScanDataOp(File(contents, filename), images-tiny)
+
+
+physicalTree:  InduceFromCandidateOp(DogImage(breed, contents, filename, text_description), Model: gpt-3.5-turbo-0125, Query Strategy: bonded-with-fallback, Token Budget: 1.0)
+Generating
+{
+  "text_description": "The image depicts a heartwarming scene between a golden retriever dog and a tabby cat. The dog, sitting on a wooden surface, is looking down at the cat with a gentle expression. The cat, standing on its hind legs, is reaching up to touch the dog's paw with one of its front paws. The background is softly blurred, emphasizing the interaction between the two animals."
+}
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+WARNING:root:   *** In DSPy 2.5, all LM clients except `dspy.LM` are deprecated, underperform, and are about to be deleted. ***
+                You are using the client GPT3, which will be removed in DSPy 2.6.
+                Changing the client is straightforward and will let you use new features (Adapters) that improve the consistency of LM outputs, especially when using chat LMs. 
+
+                Learn more about the changes and how to migrate at
+                https://github.com/stanfordnlp/dspy/blob/main/examples/migration.ipynb
+TRUE
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+{
+  "breed": "golden retriever"
+}
+Generating
+{
+  "text_description": "The image features a golden retriever sitting on grass with a scenic background that includes a clear sky and distant mountains. The dog appears happy and is looking directly at the camera."
+}
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+TRUE
+
+Question: The background of the image includes a clear sky and distant mountains
+
+Reasoning: Let's think step by step in order to produce the answer. The text description mentions that the scenic background includes a clear sky and distant mountains. Therefore, the background of the image does include a clear sky and distant mountains.
+
+Answer: TRUE
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+{
+  "breed": "golden retriever"
+}
+Generating
+{
+  "text_description": "The image features a brown poodle wearing sunglasses and a blue denim jacket. The dog is sitting at a table with a glass of iced coffee placed in front of it. The setting appears to be an outdoor cafe environment."
+}
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+TRUE
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+{
+  "breed": "poodle"
+}
+Generating
+{
+  "text_description": "The image shows a young Bengal cat lying down on a white background. The cat has distinctive bold black stripes and spots on its light brown fur. It is wearing a purple collar and looking directly at the camera with a curious and alert expression."
+}
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+FALSE
+
+Question: The cat in the image is wearing a purple collar
+
+Reasoning: Let's think step by step in order to produce the answer. The text description clearly states that the cat is wearing a purple collar. Therefore, the answer is TRUE.
+
+Answer: TRUE
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+{
+  "breed": "Bengal cat"
+}
+Generating
+```json
+{
+  "text_description": "The image shows four kittens sitting side by side against a white background. From left to right, there is a ginger tabby kitten, a cream-colored kitten, a black kitten, and a grey kitten. All four kittens are looking directly at the camera, displaying a cute and curious expression."
+}
+```
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+FALSE
+Generating
+{
+  "text_description": "The image features a collection of six illustrated cats in various playful poses and costumes. From left to right: the first cat is orange with stripes, jumping joyfully with its limbs outstretched. The second cat is depicted with long fur, standing upright. The third cat, also orange with stripes, is shown in a leaping pose. The fourth cat is black and white, resembling a tuxedo pattern, and appears to be dancing or jumping. The fifth cat is black, captured in a prowling position. The last cat is white, depicted in a playful, pouncing posture."
+}
+Generating -- gpt-3.5-turbo-0125 -- Token budget: 1.0
+FALSE
+Obtained records [<palimpzest.elements.records.DataRecord object at 0x7f85ec31cfd0>, <palimpzest.elements.records.DataRecord object at 0x7f861d3cef70>, <palimpzest.elements.records.DataRecord object at 0x7f861d40af40>, <palimpzest.elements.records.DataRecord object at 0x7f861d333340>]
+Trying to open  testdata/images-tiny/img1.png
+Trying to open  testdata/images-tiny/img2.png
+Trying to open  testdata/images-tiny/img3.png
+Trying to open  testdata/images-tiny/img4.png
+Elapsed time: 38.19518518447876
+Running on local URL:  http://127.0.0.1:7860
+
+To create a public link, set `share=True` in `launch()`.
